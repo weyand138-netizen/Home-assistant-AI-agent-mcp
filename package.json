@@ -1,0 +1,30 @@
+{
+  "name": "ha-mcp-server",
+  "version": "1.0.0",
+  "description": "Home Assistant MCP Server — 通过 MCP 协议让 AI Agent 直接控制 Home Assistant 设备",
+  "type": "module",
+  "main": "ha-mcp-server.mjs",
+  "bin": {
+    "ha-mcp-server": "ha-mcp-server.mjs"
+  },
+  "files": [
+    "ha-mcp-server.mjs",
+    "ha-service-dict.mjs"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "home-assistant",
+    "mcp",
+    "model-context-protocol",
+    "smart-home",
+    "ai",
+    "iot"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/weyand138-netizen/Home-assistant-AI-agent-mcp"
+  }
+}
