@@ -1,8 +1,16 @@
+[English](README.en.md) | **中文**
+
 # Home Assistant MCP Server
 
 通过 [MCP (Model Context Protocol)](https://modelcontextprotocol.io) 让 AI Agent 直接控制你的 Home Assistant 智能家居设备。
 
 **零外部依赖** — 只需要 Node.js 18+。
+
+## 前置要求
+
+- Node.js 18+
+- 正在运行的 Home Assistant 实例
+- Home Assistant 长期访问令牌（Long-Lived Access Token）
 
 ## 工具
 
@@ -17,11 +25,10 @@
 ## 快速开始
 
 ```bash
-# 1. 克隆仓库
 git clone https://github.com/weyand138-netizen/Home-assistant-AI-agent-mcp.git
 cd Home-assistant-AI-agent-mcp
 
-# 2. 直接运行（无需 npm install）
+# 直接运行（无需 npm install）
 node ha-mcp-server.mjs
 ```
 
@@ -46,23 +53,9 @@ node ha-mcp-server.mjs
 }
 ```
 
-### AIRI
+### 其他 MCP 客户端
 
-在 AIRI 设置 → MCP 配置中，编辑 `mcp.json`：
-
-```json
-{
-  "mcpServers": {
-    "ha": {
-      "command": "node",
-      "args": ["resources/ha-mcp-server.mjs"],
-      "cwd": "Y:\\test2\\airi\\airi-HA"
-    }
-  }
-}
-```
-
-也可以不设置环境变量，在对话中直接传参：
+在任何支持 MCP stdio 传输的客户端中，按相同方式配置即可。也可以不设置环境变量，在对话中直接传参：
 
 > "把客厅灯打开，HA 地址是 http://192.168.1.100:8123，令牌是 xxxxx"
 
@@ -72,19 +65,16 @@ node ha-mcp-server.mjs
 # 启动服务器
 node ha-mcp-server.mjs
 
-# 在另一个终端中发送测试消息（MCP 初始化握手）
-echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0.0"}}}' | node ha-mcp-server.mjs
-
-# 列出工具
-echo '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}' | node ha-mcp-server.mjs
+# 也可以用 MCP Inspector 调试
+npx @modelcontextprotocol/inspector node ha-mcp-server.mjs
 ```
 
 ## 工作原理
 
 ```
 AI Agent → MCP stdio (JSON-RPC 2.0) → ha-mcp-server.mjs
-                                         → Node.js fetch (无 CORS 限制)
-                                         → HA REST API (port 8123)
+                                         → Node.js fetch（无 CORS 限制）
+                                         → HA REST API（port 8123）
                                          → 智能家居设备
 ```
 
@@ -97,3 +87,7 @@ AI Agent → MCP stdio (JSON-RPC 2.0) → ha-mcp-server.mjs
 ## License
 
 MIT
+
+---
+
+*我只是初学者，这个做得可能不太好，欢迎指正 🙏*
